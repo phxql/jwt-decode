@@ -34,9 +34,11 @@ func main() {
 // Parses the given string to a jwt.Token
 func parseToken(text string) (*jwt.Token, error) {
 	token, err := jwt.Parse(text, nil)
-	// TODO: This error handling looks wrong, is there a better way in Go?
-	if err != nil && err.Error() != "signature is invalid" && err.Error() != "no Keyfunc was provided." {
-		return nil, err
+	if err != nil {
+		detailed := err.(*jwt.ValidationError)
+		if detailed.Errors != jwt.ValidationErrorUnverifiable {
+			return nil, err
+		}
 	}
 	return token, nil
 }
