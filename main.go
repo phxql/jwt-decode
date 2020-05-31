@@ -36,6 +36,8 @@ func parseToken(text string) (*jwt.Token, error) {
 	token, err := jwt.Parse(text, nil)
 	if err != nil {
 		detailed := err.(*jwt.ValidationError)
+		// We don't care about validating the JWT. but the JWT doesn't like that we pass nil as keyFunc and throws
+		// ValidationErrorUnverifiable errors. We just ignore it here.
 		if detailed.Errors != jwt.ValidationErrorUnverifiable {
 			return nil, err
 		}
