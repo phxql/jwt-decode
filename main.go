@@ -24,6 +24,12 @@ func main() {
 	claims := token.Claims.(jwt.MapClaims)
 	convertDateKeys(claims)
 
+	header, err := convertToJson(token.Header)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(header)
+
 	payload, err := convertToJson(claims)
 	if err != nil {
 		panic(err)
@@ -56,8 +62,8 @@ func convertDateKeys(claims jwt.MapClaims) {
 }
 
 // Converts the given claims to JSON
-func convertToJson(claims jwt.MapClaims) (string, error) {
-	payload, err := json.MarshalIndent(claims, "", "  ")
+func convertToJson(aMap map[string]interface{}) (string, error) {
+	payload, err := json.MarshalIndent(aMap, "", "  ")
 	if err != nil {
 		return "", err
 	}
