@@ -1,3 +1,7 @@
+# ARCHIVED!
+
+See [this tool](https://github.com/mike-engel/jwt-cli) for a nice alternative.
+
 # jwt-decode
 Small tool to decode JWTs, written in Go
 
